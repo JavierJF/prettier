@@ -288,8 +288,32 @@ function preferHardlineAsTrailingSpaces(node) {
   );
 }
 
+function isTextContentElement(node) {
+  const textContentElements = [
+    'blockquote',
+    'dd',
+    'div',
+    'dl',
+    'dt',
+    'figcaption',
+    'figure',
+    'hr',
+    'li',
+    'menu',
+    'ol',
+    'p',
+    'pre',
+    'ul'
+  ];
+
+  return textContentElements.includes(node.name.toLowerCase());
+}
+
 function hasSurroundingLineBreak(node) {
-  return hasLeadingLineBreak(node) && hasTrailingLineBreak(node);
+  return (
+    hasLeadingLineBreak(node) && hasTrailingLineBreak(node) &&
+    !isTextContentElement(node.parent)
+  );
 }
 
 function hasLeadingLineBreak(node) {
